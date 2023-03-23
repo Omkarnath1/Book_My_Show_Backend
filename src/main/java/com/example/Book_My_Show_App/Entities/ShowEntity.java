@@ -2,6 +2,8 @@ package com.example.Book_My_Show_App.Entities;
 
 import com.example.Book_My_Show_App.Enum.ShowType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,14 +19,16 @@ import java.util.List;
 @Table(name="ShowSeat")
 @Data
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class ShowEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private LocalDate ShowDate;
+    private LocalDate showDate;
 
-    private LocalTime ShowTime;
+    private LocalTime showTime;
 
     @Enumerated(value =EnumType.STRING)
     private ShowType showType;
@@ -37,7 +41,7 @@ public class ShowEntity {
 
     @ManyToOne
     @JoinColumn
-    private MovieEntity movieEntity;
+    private TheaterEntity theaterEntity;
 
     @OneToMany(mappedBy = "showEntity", cascade = CascadeType.ALL)
     private List<ShowSeatEntity>  listOfShowsSeats = new ArrayList<>();
@@ -47,4 +51,7 @@ public class ShowEntity {
     private List<TicketEntity> listOfBookedTickets  = new ArrayList<>();
 
 
+    @ManyToOne
+    @JoinColumn
+    private MovieEntity movieEntity;
 }

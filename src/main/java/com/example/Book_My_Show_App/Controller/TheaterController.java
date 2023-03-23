@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalTime;
+import java.util.List;
+
 @RestController
 @RequestMapping("/theatre")
 public class TheaterController {
     @Autowired
     TheaterService theaterService;
 
-    @PostMapping("/addtheatre")
+    @PostMapping("/addTheatre")
     public ResponseEntity addTheater(@RequestBody TheaterEntryDTO theaterEntryDTO){
         try {
             String result = theaterService.addTheater(theaterEntryDTO);
@@ -26,5 +29,9 @@ public class TheaterController {
         catch (Exception e){
             return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public ResponseEntity<List<LocalTime>> getShowTiming(){
+        return new ResponseEntity<>(theaterService.getShowTiming(), HttpStatus.OK);
     }
 }
